@@ -3,130 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Photo Gallery</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        header {
-            background-color: #6200ea;
-            color: #fff;
-            text-align: center;
-            padding: 1rem 0;
-        }
-
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        figure {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 1rem;
-            text-align: center;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        figure:hover {
-            transform: scale(1.05);
-        }
-
-        img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-
-        figcaption {
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        footer {
-            text-align: center;
-            background-color: #6200ea;
-            color: #fff;
-            padding: 1rem 0;
-            position: relative;
-            bottom: 0;
+            height: 100vh;
             width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .photoGCont {
+            width: 500px;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: #000;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .controle-ptn {
+            width: 50px;
+            height: 30px;
+            border-radius: 5px;
+            background-color: #00000042;
+            color: aliceblue;
+            border: none;
+            cursor: pointer;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            transition: .2s;
+            position: absolute;
+        }
+        .controle-ptn:hover {
+            background-color: #363636;
+        }
+        .btnP {
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+        }
+        .btnN {
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+        #radio-cont {
+            display: block;
+            overflow: hidden;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #info-text {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
         }
     </style>
-    <script defer src="script.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Interactive Photo Gallery</h1>
-    </header>
+    <div class="photoGCont" id="photoGCont">
+        <span id="info-text">Hover over an image below to display here</span>
+        <button type="button" class="controle-ptn btnP" onclick="prev()">prev</button>
+        <button type="button" class="controle-ptn btnN" onclick="next()">next</button>
+        <span id="radio-cont"></span>
+    </div>
 
-    <main>
-        <section class="gallery">
-            <figure tabindex="0">
-                <img src="images/photo1.jpg" alt="Description of photo 1">
-                <figcaption>Caption for Photo 1</figcaption>
-            </figure>
-            <figure tabindex="0">
-                <img src="images/photo2.jpg" alt="Description of photo 2">
-                <figcaption>Caption for Photo 2</figcaption>
-            </figure>
-            <figure tabindex="0">
-                <img src="images/photo3.jpg" alt="Description of photo 3">
-                <figcaption>Caption for Photo 3</figcaption>
-            </figure>
-            <figure tabindex="0">
-                <img src="images/photo4.jpg" alt="Description of photo 4">
-                <figcaption>Caption for Photo 4</figcaption>
-            </figure>
-            <figure tabindex="0">
-                <img src="images/photo5.jpg" alt="Description of photo 5">
-                <figcaption>Caption for Photo 5</figcaption>
-            </figure>
-            <figure tabindex="0">
-                <img src="images/photo6.jpg" alt="Description of photo 6">
-                <figcaption>Caption for Photo 6</figcaption>
-            </figure>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Interactive Photo Gallery</p>
-    </footer>
+    <div id="image-thumbnails" style="margin-top: 20px;"></div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log('Page loaded');
+        const IMGS = [
+            "https://fastly.picsum.photos/id/716/500/300.jpg?hmac=GhPfAXknbVNBMNGZn25UkVoq876hu7ePouYGTlShLF4",
+            "https://fastly.picsum.photos/id/431/500/300.jpg?hmac=i43YbaCTHLjNYDcIlUho7sbEpYAhVYdONWlsNenAtSU",
+            "https://fastly.picsum.photos/id/503/500/300.jpg?hmac=MV2LDKNPf4Msr-P-Ci-t5ufAj4yEDPH04ixWBFipdWY",
+            "https://fastly.picsum.photos/id/44/500/300.jpg?hmac=kIJdWH4i9LUpE-MgLd_CXRm9DsXeTNLFjXmlmKvViuA"
+        ];
+        const CONT = document.getElementById('photoGCont');
+        const RADIO_CONT = document.getElementById('radio-cont');
+        const INFO_TEXT = document.getElementById('info-text');
+        let index = 0;
 
-            const figures = document.querySelectorAll('figure');
-            figures.forEach(figure => {
-                figure.addEventListener('mouseover', () => {
-                    figure.style.border = '2px solid blue';
-                });
-                figure.addEventListener('mouseleave', () => {
-                    figure.style.border = '';
-                });
-                figure.addEventListener('focus', () => {
-                    figure.style.outline = '2px solid red';
-                });
-                figure.addEventListener('blur', () => {
-                    figure.style.outline = '';
-                });
-            });
+        CONT.style.backgroundImage = `url(${IMGS[index]})`;
 
-            figures.forEach(figure => {
-                figure.setAttribute('tabindex', '0');
+        function prev() {
+            index = index === 0 ? IMGS.length - 1 : index - 1;
+            document.getElementById(`radio-${index}`).checked = true;
+            CONT.style.backgroundImage = `url(${IMGS[index]})`;
+        }
+
+        function next() {
+            index = index === IMGS.length - 1 ? 0 : index + 1;
+            document.getElementById(`radio-${index}`).checked = true;
+            CONT.style.backgroundImage = `url(${IMGS[index]})`;
+        }
+
+        function loadRadio() {
+            for (let i = 0; i < IMGS.length; i++) {
+                let radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'radio';
+                radio.value = i;
+                radio.id = `radio-${i}`;
+                RADIO_CONT.appendChild(radio);
+            }
+        }
+
+        function update(previewPic) {
+            console.log("Image Source:", previewPic.src);
+            console.log("Image Alt:", previewPic.alt);
+            INFO_TEXT.textContent = previewPic.alt;
+            CONT.style.backgroundImage = `url(${previewPic.src.replace('100/60', '500/300')})`;
+        }
+
+        function reset() {
+            console.log("Resetting to default state.");
+            INFO_TEXT.textContent = "Hover over an image below to display here";
+            CONT.style.backgroundImage = `url(${IMGS[index]})`;
+        }
+
+        loadRadio();
+
+        let radios = document.querySelectorAll('input[name="radio"]');
+        for (let i = 0; i < radios.length; i++) {
+            radios[i].addEventListener('change', function () {
+                CONT.style.backgroundImage = `url(${IMGS[i]})`;
             });
-        });
+        }
+
+        function fetchImages() {
+            let imageContainer = document.getElementById('image-thumbnails');
+            imageContainer.innerHTML = "";
+            for (let i = 0; i < IMGS.length; i++) {
+                let img = document.createElement('img');
+                img.src = IMGS[i];
+                img.width = 100;
+                img.alt = "Image " + (i + 1);
+                img.addEventListener('mouseover', function () {
+                    update(this);
+                });
+                imageContainer.appendChild(img);
+            }
+        }
+        fetchImages()
     </script>
 </body>
 </html>
