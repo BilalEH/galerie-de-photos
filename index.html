@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Photo Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Interactive Photo Gallery</h1>
+    </header>
+
+    <main>
+        <section class="gallery">
+            <figure tabindex="0">
+                <img src="https://fastly.picsum.photos/id/716/500/300.jpg?hmac=GhPfAXknbVNBMNGZn25UkVoq876hu7ePouYGTlShLF4" alt="Description of photo 1">
+                <figcaption>Caption for Photo 1</figcaption>
+            </figure>
+            <figure tabindex="0">
+                <img src="https://fastly.picsum.photos/id/431/500/300.jpg?hmac=i43YbaCTHLjNYDcIlUho7sbEpYAhVYdONWlsNenAtSU" alt="Description of photo 2">
+                <figcaption>Caption for Photo 2</figcaption>
+            </figure>
+            <figure tabindex="0">
+                <img src="https://fastly.picsum.photos/id/503/500/300.jpg?hmac=MV2LDKNPf4Msr-P-Ci-t5ufAj4yEDPH04ixWBFipdWY" alt="Description of photo 3">
+                <figcaption>Caption for Photo 3</figcaption>
+            </figure>
+            <figure tabindex="0">
+                <img src="https://fastly.picsum.photos/id/44/500/300.jpg?hmac=kIJdWH4i9LUpE-MgLd_CXRm9DsXeTNLFjXmlmKvViuA" alt="Description of photo 4">
+                <figcaption>Caption for Photo 4</figcaption>
+            </figure>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Interactive Photo Gallery</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Page loaded');
+
+            const figures = document.querySelectorAll('figure');
+            figures.forEach(figure => {
+                figure.addEventListener('mouseover', () => {
+                    figure.style.border = '2px solid blue';
+                });
+                figure.addEventListener('mouseleave', () => {
+                    figure.style.border = '';
+                });
+                figure.addEventListener('focus', () => {
+                    figure.style.outline = '2px solid red';
+                });
+                figure.addEventListener('blur', () => {
+                    figure.style.outline = '';
+                });
+            });
+
+            figures.forEach(figure => {
+                figure.setAttribute('tabindex', '0');
+            });
+        });
+    </script>
+</body>
+</html>
