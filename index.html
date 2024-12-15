@@ -4,7 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Photo Gallery</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #6200ea;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        figure {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        figure:hover {
+            transform: scale(1.05);
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        figcaption {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #6200ea;
+            color: #fff;
+            padding: 1rem 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
     <script defer src="script.js"></script>
 </head>
 <body>
@@ -15,20 +73,28 @@
     <main>
         <section class="gallery">
             <figure tabindex="0">
-                <img src="https://fastly.picsum.photos/id/716/500/300.jpg?hmac=GhPfAXknbVNBMNGZn25UkVoq876hu7ePouYGTlShLF4" alt="Description of photo 1">
+                <img src="images/photo1.jpg" alt="Description of photo 1">
                 <figcaption>Caption for Photo 1</figcaption>
             </figure>
             <figure tabindex="0">
-                <img src="https://fastly.picsum.photos/id/431/500/300.jpg?hmac=i43YbaCTHLjNYDcIlUho7sbEpYAhVYdONWlsNenAtSU" alt="Description of photo 2">
+                <img src="images/photo2.jpg" alt="Description of photo 2">
                 <figcaption>Caption for Photo 2</figcaption>
             </figure>
             <figure tabindex="0">
-                <img src="https://fastly.picsum.photos/id/503/500/300.jpg?hmac=MV2LDKNPf4Msr-P-Ci-t5ufAj4yEDPH04ixWBFipdWY" alt="Description of photo 3">
+                <img src="images/photo3.jpg" alt="Description of photo 3">
                 <figcaption>Caption for Photo 3</figcaption>
             </figure>
             <figure tabindex="0">
-                <img src="https://fastly.picsum.photos/id/44/500/300.jpg?hmac=kIJdWH4i9LUpE-MgLd_CXRm9DsXeTNLFjXmlmKvViuA" alt="Description of photo 4">
+                <img src="images/photo4.jpg" alt="Description of photo 4">
                 <figcaption>Caption for Photo 4</figcaption>
+            </figure>
+            <figure tabindex="0">
+                <img src="images/photo5.jpg" alt="Description of photo 5">
+                <figcaption>Caption for Photo 5</figcaption>
+            </figure>
+            <figure tabindex="0">
+                <img src="images/photo6.jpg" alt="Description of photo 6">
+                <figcaption>Caption for Photo 6</figcaption>
             </figure>
         </section>
     </main>
